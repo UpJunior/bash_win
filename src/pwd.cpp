@@ -1,6 +1,11 @@
 #include "base.h"
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define MAX_PWD_ARRAY_SIZE 256
-extern "C" void pwd(){
+void pwd(){
     char current_path[MAX_PWD_ARRAY_SIZE];
     char* result =  getcwd(current_path, 
             MAX_PWD_ARRAY_SIZE);
@@ -9,3 +14,7 @@ extern "C" void pwd(){
     }
     cout << current_path << endl;
 }
+
+#ifdef __cplusplus
+}
+#endif

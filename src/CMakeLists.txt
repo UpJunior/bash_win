@@ -1,12 +1,18 @@
 add_library(pwd SHARED pwd.cpp)
+
+set(COMMAND_SOURCE
+	pwd.cpp
+)
+
 add_executable(${PROJECT_NAME}
 	main.cpp
-	
 	base.h
 	register.h
 	intf.h
-	pwd.cpp
-)
-target_link_libraries(${PROJECT_NAME} dl)
+	${COMMAND_SOURCE}
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/../build/src/libpwd.so DESTINATION ${PUBLISH_OUTPUT})
+)
+
+if (CMAKE_SYSTEM_NAME MATCHES "Linux")
+	target_link_libraries(${PROJECT_NAME} dl)
+endif()

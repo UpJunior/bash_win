@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <iostream>
 #include <string>
+#include <string.h>
+
 
 using std::unordered_map;
 using std::string;
@@ -15,10 +17,12 @@ using std::endl;
 
 #ifdef __linux__
     #include <dlfcn.h>
+    #include <sys/utsname.h>
     #define LIBTYPE void*
     #define OPENLIB(libname) dlopen((libname), RTLD_LAZY)
     #define LIBFUNC(lib, fn) dlsym((lib), (fn))
-#else
+#elif defined(WINVER)
+    #include <windows.h>
     #define LIBTYPE HINSTANCE
     #define OPENLIB(libname) LoadLibraryW(L ## libname)
     #define LIBFUNC(lib, fn) GetProcAddress((lib), (fn))
@@ -32,6 +36,7 @@ private:
     static Base* base;
 public:
     Base(){}
+    ~Base(){}
     static Base* gen_instance() {
         if (base == NULL) {
             base = new Base();
