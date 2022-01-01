@@ -1,5 +1,9 @@
+
+rmdir /s/q build
+mkdir build
 cd build
-cmake ..
+where cmake
+cmake -G"MinGW Makefiles" ..
 mingw32-make.exe
 cd src
 win_bash.exe

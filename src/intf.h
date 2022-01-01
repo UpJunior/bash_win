@@ -2,5 +2,7 @@
 #define _INTF_H_
 #include "base.h"
 
-void pwd();
+string CommandList[] = {
+    "pwd"
+};
 #endif

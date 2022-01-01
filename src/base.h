@@ -1,6 +1,8 @@
 #ifndef _BASE_H_
 #define _BASE_H_
 
+#include <cstdio>
+#include <unistd.h>
 #include <unordered_map>
 #include <iostream>
 #include <string>
@@ -11,17 +13,32 @@ using std::cout;
 using std::cin;
 using std::endl;
 
+#ifdef __linux__
+    #include <dlfcn.h>
+    #define LIBTYPE void*
+    #define OPENLIB(libname) dlopen((libname), RTLD_LAZY)
+    #define LIBFUNC(lib, fn) dlsym((lib), (fn))
+#else
+    #define LIBTYPE HINSTANCE
+    #define OPENLIB(libname) LoadLibraryW(L ## libname)
+    #define LIBFUNC(lib, fn) GetProcAddress((lib), (fn))
+#endif
 
-typedef void* (*func_ptr)();
+typedef int func_ptr();
 
 class Base {
 
 private:
-    Base* base;
+    static Base* base;
 public:
     Base(){}
-    virtual ~Base() = delete;
-    virtual bool run() = 0;
+    static Base* gen_instance() {
+        if (base == NULL) {
+            base = new Base();
+            return base;
+        }   
+        return base;
+    }
 };
 
 #endif

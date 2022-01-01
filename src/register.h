@@ -7,8 +7,9 @@ class Register{
 
 private:
     static Register* _reg;
+    unordered_map<string, func_ptr*> func_list;
 public:
-    unordered_map<string, func_ptr> func_list;
+
     Register(){}
     ~Register(){}
 
@@ -20,13 +21,12 @@ public:
         return _reg;
     }
 
-    void regiser_func(string &name, func_ptr fn_ptr) {
+    void regiser_func(string &name, func_ptr* fn_ptr) {
         func_list[name] = fn_ptr;
-        cout << "register function:" << name << endl;
     }
 
-    func_ptr get_func_ptr(string &name) {
-       func_ptr fn_ptr = func_list[name];
+    func_ptr* get_func_ptr(string &name) {
+       func_ptr* fn_ptr = func_list[name];
         if (fn_ptr == NULL) {
             return NULL;
         }
