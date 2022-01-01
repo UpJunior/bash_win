@@ -2,7 +2,10 @@
 add_executable(${PROJECT_NAME}
 	main.cpp
 	base.cpp
+
 	base.h
-	cmd.h
-	type_def.h
+	register.h
+	intf.h
+
+	pwd.cpp
 )
